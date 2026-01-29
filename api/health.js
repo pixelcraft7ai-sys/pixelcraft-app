@@ -1,3 +1,3 @@
-module.exports = (req, res) => {
-  res.end('ok');
-};
+export default function handler(req, res) {
+  res.status(200).send('ok');
+}
