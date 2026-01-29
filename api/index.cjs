@@ -1,13 +1,13 @@
-import { createExpressMiddleware } from '@trpc/server/adapters/express';
-import { initTRPC, TRPCError } from '@trpc/server';
-import superjson from 'superjson';
-import { z } from 'zod';
-import mysql from 'mysql2/promise';
-import { drizzle } from 'drizzle-orm/mysql2';
-import { eq } from 'drizzle-orm';
-import { nanoid } from 'nanoid';
-import crypto from 'crypto';
-import { mysqlTable, int, varchar, text, timestamp, mysqlEnum } from 'drizzle-orm/mysql-core';
+const { createExpressMiddleware } = require('@trpc/server/adapters/express');
+const { initTRPC, TRPCError } = require('@trpc/server');
+const superjson = require('superjson');
+const { z } = require('zod');
+const mysql = require('mysql2/promise');
+const { drizzle } = require('drizzle-orm/mysql2');
+const { eq } = require('drizzle-orm');
+const { nanoid } = require('nanoid');
+const crypto = require('crypto');
+const { mysqlTable, int, varchar, text, timestamp, mysqlEnum } = require('drizzle-orm/mysql-core');
 
 // --- Schema Definition ---
 const users = mysqlTable("users", {
@@ -121,19 +121,15 @@ const trpcHandler = createExpressMiddleware({
   createContext: () => ({}),
 });
 
-export default function handler(req, res) {
-  // Simple health check
+module.exports = (req, res) => {
   if (req.url.includes('/api/health')) {
     return res.status(200).json({ status: 'ok' });
   }
   
-  // Handle tRPC requests
   if (req.url.includes('/api/trpc')) {
-    // Adjust URL for middleware
-    const originalUrl = req.url;
     req.url = req.url.split('/api/trpc')[1] || '/';
     return trpcHandler(req, res);
   }
 
   return res.status(404).json({ error: 'Not Found', url: req.url });
-}
+};
