@@ -1,5 +1,12 @@
-export default function (req, res) {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
+export const config = {
+  runtime: 'edge',
+};
+
+export default function (req) {
+  return new Response('Hello World', {
+    status: 200,
+    headers: {
+      'content-type': 'text/plain',
+    },
+  });
 }
