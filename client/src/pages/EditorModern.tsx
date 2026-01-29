@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -155,11 +156,11 @@ export default function EditorModern() {
           <Sparkles className="w-12 h-12 text-purple-600 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t("editor.accessRequired")}</h1>
           <p className="text-gray-600 mb-6">{t("editor.signInToAccess")}</p>
-          <a href="/">
+          <Link href="/login">
             <Button className="bg-purple-600 hover:bg-purple-700 w-full">
-              {t("editor.goToHome")}
+              {t("auth.signIn")}
             </Button>
-          </a>
+          </Link>
         </Card>
       </div>
     );

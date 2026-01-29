@@ -19,11 +19,43 @@ export function useAuth(options?: UseAuthOptions) {
     refetchOnWindowFocus: false,
   });
 
+  const loginMutation = trpc.auth.login.useMutation({
+    onSuccess: (data) => {
+      utils.auth.me.setData(undefined, data.user as any);
+    },
+  });
+
+  const registerMutation = trpc.auth.register.useMutation({
+    onSuccess: (data) => {
+      utils.auth.me.setData(undefined, data.user as any);
+    },
+  });
+
   const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
       utils.auth.me.setData(undefined, null);
     },
   });
+
+  const login = useCallback(async (email: string, password: string) => {
+    try {
+      const result = await loginMutation.mutateAsync({ email, password });
+      return result.success;
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
+    }
+  }, [loginMutation]);
+
+  const register = useCallback(async (email: string, password: string, name: string) => {
+    try {
+      const result = await registerMutation.mutateAsync({ email, password, name });
+      return result.success;
+    } catch (error) {
+      console.error("Registration failed:", error);
+      throw error;
+    }
+  }, [registerMutation]);
 
   const logout = useCallback(async () => {
     try {
@@ -84,6 +116,8 @@ export function useAuth(options?: UseAuthOptions) {
   return {
     ...state,
     refresh: () => meQuery.refetch(),
+    login,
+    register,
     logout,
   };
 }

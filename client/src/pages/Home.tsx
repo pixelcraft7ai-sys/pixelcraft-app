@@ -41,11 +41,11 @@ export default function Home() {
                 </Link>
               </>
             ) : (
-              <a href={getLoginUrl()}>
+              <Link href="/login">
                 <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
                   {t("auth.signIn")}
                 </Button>
-              </a>
+              </Link>
             )}
           </div>
         </div>
@@ -67,12 +67,12 @@ export default function Home() {
             {t("home.subtitle")}
           </p>
           {!isAuthenticated && (
-            <a href={getLoginUrl()}>
+            <Link href="/register">
               <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-shadow">
                 {t("home.getStarted")}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-            </a>
+            </Link>
           )}
         </div>
 

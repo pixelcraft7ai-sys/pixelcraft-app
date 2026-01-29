@@ -1,22 +1,8 @@
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
 import { users } from "../drizzle/schema";
 import { nanoid } from "nanoid";
 import * as crypto from "crypto";
-
-let _db: ReturnType<typeof drizzle> | null = null;
-
-export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
-  }
-  return _db;
-}
+import { getDb } from "./db";
 
 /**
  * Hash password using bcrypt-like approach
@@ -88,9 +74,16 @@ export async function registerUser(data: {
       .where(eq(users.openId, userId))
       .limit(1);
 
+    const createdUser = newUser[0];
+    if (createdUser) {
+      // Initialize free subscription
+      const { initializeUserSubscription } = await import("./db");
+      await initializeUserSubscription(createdUser.id);
+    }
+
     return {
       success: true,
-      userId: newUser[0]?.id,
+      userId: createdUser?.id,
     };
   } catch (error) {
     console.error("[Auth] Registration failed:", error);

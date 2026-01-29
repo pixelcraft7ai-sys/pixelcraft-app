@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -176,11 +177,11 @@ export default function Editor() {
           <p className="text-gray-600 mb-6">
             {t("editor.signInToAccess")}
           </p>
-          <a href="/">
+          <Link href="/login">
             <Button className="bg-purple-600 hover:bg-purple-700">
-              {t("editor.goToHome")}
+              {t("auth.signIn")}
             </Button>
-          </a>
+          </Link>
         </Card>
       </div>
     );

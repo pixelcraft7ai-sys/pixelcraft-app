@@ -7,7 +7,7 @@ import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-or
  */
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  openId: varchar("openId", { length: 64 }).unique(),
   email: varchar("email", { length: 320 }).notNull().unique(),
   name: text("name"),
   passwordHash: text("passwordHash"), // For email/password auth
