@@ -1,3 +1,4 @@
 module.exports = (req, res) => {
-  res.send('Hello World');
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello World');
 };
