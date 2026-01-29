@@ -1,15 +1,15 @@
-const express = require('express');
-const { createExpressMiddleware } = require('@trpc/server/adapters/express');
-const { initTRPC, TRPCError } = require('@trpc/server');
-const superjson = require('superjson');
-const { z } = require('zod');
-const cors = require('cors');
-const mysql = require('mysql2/promise');
-const { drizzle } = require('drizzle-orm/mysql2');
-const { eq } = require('drizzle-orm');
-const { nanoid } = require('nanoid');
-const crypto = require('crypto');
-const { mysqlTable, int, varchar, text, timestamp, mysqlEnum } = require('drizzle-orm/mysql-core');
+import express from 'express';
+import { createExpressMiddleware } from '@trpc/server/adapters/express';
+import { initTRPC, TRPCError } from '@trpc/server';
+import superjson from 'superjson';
+import { z } from 'zod';
+import cors from 'cors';
+import mysql from 'mysql2/promise';
+import { drizzle } from 'drizzle-orm/mysql2';
+import { eq } from 'drizzle-orm';
+import { nanoid } from 'nanoid';
+import crypto from 'crypto';
+import { mysqlTable, int, varchar, text, timestamp, mysqlEnum } from 'drizzle-orm/mysql-core';
 
 // --- Schema Definition ---
 const users = mysqlTable("users", {
@@ -125,4 +125,4 @@ app.use(express.json());
 app.use("/api/trpc", createExpressMiddleware({ router: appRouter, createContext: () => ({}) }));
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
-module.exports = app;
+export default app;
