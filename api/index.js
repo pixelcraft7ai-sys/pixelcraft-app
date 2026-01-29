@@ -1,9 +1,7 @@
-import express from 'express';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { z } from 'zod';
-import cors from 'cors';
 import mysql from 'mysql2/promise';
 import { drizzle } from 'drizzle-orm/mysql2';
 import { eq } from 'drizzle-orm';
@@ -117,12 +115,24 @@ const appRouter = router({
   health: publicProcedure.query(() => ({ status: "ok" })),
 });
 
-// --- Express App ---
-const app = express();
-app.use(cors());
-app.use(express.json());
+// --- Vercel Serverless Function Handler ---
+const trpcHandler = createExpressMiddleware({
+  router: appRouter,
+  createContext: () => ({}),
+});
 
-app.use("/api/trpc", createExpressMiddleware({ router: appRouter, createContext: () => ({}) }));
-app.get("/api/health", (req, res) => res.json({ status: "ok" }));
+export default function handler(req, res) {
+  // Simple health check
+  if (req.url === '/api/health') {
+    return res.status(200).json({ status: 'ok' });
+  }
+  
+  // Handle tRPC requests
+  if (req.url.startsWith('/api/trpc')) {
+    // We need to adjust the URL for the middleware
+    req.url = req.url.replace('/api/trpc', '');
+    return trpcHandler(req, res);
+  }
 
-export default app;
+  return res.status(404).json({ error: 'Not Found' });
+}
