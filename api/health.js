@@ -1,12 +1,3 @@
-export const config = {
-  runtime: 'edge',
+module.exports = (req, res) => {
+  res.send('Hello World');
 };
-
-export default function (req) {
-  return new Response('Hello World', {
-    status: 200,
-    headers: {
-      'content-type': 'text/plain',
-    },
-  });
-}
