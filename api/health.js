@@ -1,4 +1,3 @@
-module.exports = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World');
-};
+export default function handler(req, res) {
+  res.status(200).json({ status: 'ok' });
+}
