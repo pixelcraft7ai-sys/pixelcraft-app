@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1765038962519,
+      "tag": "0000_violet_raider",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1765039138877,
+      "tag": "0001_minor_lifeguard",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1765041254740,
+      "tag": "0002_wild_ben_parker",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1769362896221,
+      "tag": "0003_slimy_jimmy_woo",
+      "breakpoints": true
+    }
+  ]
+}
