@@ -1,12 +1,3 @@
-export const config = {
-  runtime: 'edge',
-};
-
-export default function handler(req) {
-  return new Response(JSON.stringify({ status: 'ok', message: 'Edge API is working' }), {
-    status: 200,
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
+export default function handler(req, res) {
+  res.status(200).json({ status: 'ok' });
 }
