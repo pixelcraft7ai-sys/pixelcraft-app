@@ -1,3 +1,3 @@
-module.exports = (req, res) => {
-  res.status(200).send('API is working CJS');
-};
+export default function handler(req, res) {
+  res.end('API is working ESM end');
+}
