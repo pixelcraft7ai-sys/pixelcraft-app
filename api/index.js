@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+module.exports = (req, res) => {
   res.setHeader('Content-Type', 'text/plain');
-  res.end('API is working ESM headers');
-}
+  res.end('API is working CJS headers');
+};
